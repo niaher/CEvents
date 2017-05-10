@@ -1,15 +1,15 @@
-namespace Coderful.Events
+namespace CEvents
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Diagnostics.Contracts;
 	using System.Linq;
-    using System.Reflection;
+	using System.Reflection;
 
-    /// <summary>
-    /// Simple class to manage multiple IEventStream instances.
-    /// </summary>
-    public class EventStreamManager
+	/// <summary>
+	/// Simple class to manage multiple IEventStream instances.
+	/// </summary>
+	public class EventStreamManager
 	{
 		private readonly Dictionary<Type, object> eventStreams = new Dictionary<Type, object>();
 
@@ -102,8 +102,8 @@ namespace Coderful.Events
 
 			var method = streamType.GetTypeInfo().GetMethods().First(
 				t =>
-				t.Name == nameof(IEventStream<object>.Subscribe) &&
-				t.GetParameters().FirstOrDefault()?.ParameterType.GetGenericTypeDefinition() == typeof(Action<>));
+					t.Name == nameof(IEventStream<object>.Subscribe) &&
+					t.GetParameters().FirstOrDefault()?.ParameterType.GetGenericTypeDefinition() == typeof(Action<>));
 
 			return (IDisposable)method.Invoke(stream, new object[] { del });
 		}

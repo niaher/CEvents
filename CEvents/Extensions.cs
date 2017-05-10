@@ -1,4 +1,4 @@
-﻿namespace Coderful.Events
+﻿namespace CEvents
 {
 	using System;
 

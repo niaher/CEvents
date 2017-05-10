@@ -1,7 +1,7 @@
-﻿namespace Coderful.Events
+﻿namespace CEvents
 {
 	using System;
-	
+
 	public class EventInvocationException : Exception
 	{
 		internal EventInvocationException(string message)
