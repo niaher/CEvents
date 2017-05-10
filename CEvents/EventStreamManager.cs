@@ -4,11 +4,12 @@ namespace Coderful.Events
 	using System.Collections.Generic;
 	using System.Diagnostics.Contracts;
 	using System.Linq;
+    using System.Reflection;
 
-	/// <summary>
-	/// Simple class to manage multiple IEventStream instances.
-	/// </summary>
-	public class EventStreamManager
+    /// <summary>
+    /// Simple class to manage multiple IEventStream instances.
+    /// </summary>
+    public class EventStreamManager
 	{
 		private readonly Dictionary<Type, object> eventStreams = new Dictionary<Type, object>();
 
@@ -77,7 +78,7 @@ namespace Coderful.Events
 		{
 			Contract.Requires(handler != null);
 
-			var interfaceType = handler.GetType().GetInterfaces()
+			var interfaceType = handler.GetType().GetTypeInfo().GetInterfaces()
 				.SingleOrDefault(t => t.GetGenericTypeDefinition() == typeof(IEventHandler<>));
 
 			if (interfaceType == null)
@@ -95,11 +96,11 @@ namespace Coderful.Events
 				throw new KeyNotFoundException(string.Format("Event stream for '{0}' was not found.", eventType.Name));
 			}
 
-			var handleEvent = handler.GetType().GetMethod(nameof(IEventHandler<object>.HandleEvent));
+			var handleEvent = handler.GetType().GetTypeInfo().GetMethod(nameof(IEventHandler<object>.HandleEvent));
 			var actionType = typeof(Action<>).MakeGenericType(eventType);
 			var del = handleEvent.CreateDelegate(actionType, handler);
 
-			var method = streamType.GetMethods().First(
+			var method = streamType.GetTypeInfo().GetMethods().First(
 				t =>
 				t.Name == nameof(IEventStream<object>.Subscribe) &&
 				t.GetParameters().FirstOrDefault()?.ParameterType.GetGenericTypeDefinition() == typeof(Action<>));
