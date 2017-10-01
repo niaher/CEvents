@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard1.6</TargetFramework>
+		<TargetFrameworks>netstandard1.6;netstandard2.0</TargetFrameworks>
 		<PackageId>CEvents</PackageId>
-		<PackageVersion>1.0.0</PackageVersion>
+		<PackageVersion>1.1.0</PackageVersion>
 		<Authors>niaher</Authors>
 		<Description>Simple implementation of domain-driven events, easily pluggable into any app.</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -11,9 +11,13 @@
 		<PackageTags>domain-events domain-driven-design messaging pubsub</PackageTags>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(Platform)\CEvents.xml</DocumentationFile>
+	</PropertyGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="System.Reactive" Version="3.1.1" />
 		<PackageReference Include="System.Reflection" Version="4.3.0" />
 	</ItemGroup>
-
+	
 </Project>
